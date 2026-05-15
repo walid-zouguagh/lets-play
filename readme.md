@@ -23,3 +23,14 @@
 ```bash
 docker compose up -d
 ```
+
+## Data Flow Overview
+    Now that the models and repositories are set, here is how the data will flow through your "Let's Play" application:
+
+    * Request: A JSON object comes into the Controller.
+
+    * Service: Logic ensures the user owns the product they are trying to edit.
+
+    * Repository: Interacts with the Dockerized MongoDB.
+
+    * Database: Stores the document in the products or users collection.

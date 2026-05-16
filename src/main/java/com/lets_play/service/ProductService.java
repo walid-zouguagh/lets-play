@@ -19,6 +19,12 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) {
+        // Get the email of the currently logged-in user from the JWT
+        String currentUserEmail = org.springframework.security.core.context.SecurityContextHolder
+                .getContext().getAuthentication().getName();
+
+        // Set the userId on the product before saving
+        product.setUserId(currentUserEmail);
         return productRepository.save(product);
     }
 

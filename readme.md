@@ -34,3 +34,11 @@ docker compose up -d
     * Repository: Interacts with the Dockerized MongoDB.
 
     * Database: Stores the document in the products or users collection.
+
+```bash 
+* Public Access: GET /api/products works without a token.
+
+* Auth: POST /api/auth/register and /login work.
+
+* Security: POST /api/products requires the "Bearer" token.
+```

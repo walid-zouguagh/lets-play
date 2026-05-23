@@ -23,10 +23,10 @@ public class UserService {
         // hash password using BCrypt
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // default role
-        if (user.getRole() == null) {
-            user.setRole(Role.USER);
-        }
+        // default role User
+        // if (user.getRole() == null) {
+        user.setRole(Role.USER);
+        // }
 
         return userRepository.save(user);
     }

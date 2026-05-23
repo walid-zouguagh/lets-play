@@ -1,27 +1,27 @@
 # 🎮 Let's Play - Secure Backend REST API
 
-A production-ready, highly secure Spring Boot REST API built with **Spring Boot 4.x**, **Spring Security**, and **Dockerized MongoDB**. This application handles fine-grained resource tracking, containerized state persistence, state-free JSON Web Token (JWT) authentication, and custom validation handling.
+A production-ready, highly secure Spring Boot REST API built with **Spring Boot 4.0.6, **Spring Security**, and **Dockerized MongoDB\*\*. This application handles fine-grained resource tracking, containerized state persistence, state-free JSON Web Token (JWT) authentication, and custom validation handling.
 
 ---
 
 ## 🚀 Key Features
 
-* **📦 Containerized Database Layer:** Fully isolated MongoDB multi-tenant environment run via Docker.
-* **🛡️ Stateful Filter Chain & JWT Engine:** Cryptographically signed tokens using HS256 containing identity context.
-* **🔒 Strict Role Boundary & Isolation:** Securely configured endpoints ensuring only **one system-wide Admin** can exist, forcing all external user sign-ups to standard roles.
-* **👤 Contextual Resource Ownership:** Built-in business checks logic so regular users can only alter documents they created, while Admins retain global administrative override rights.
-* **🎯 Global Fault Management:** Graceful application interceptors preventing raw unhandled 5XX leaks by formatting uniform JSON structures down to clients.
-* **🌐 Cross-Origin Support (CORS):** Fully calibrated multi-client browser resource policy supporting separate frontend frameworks.
+- **📦 Containerized Database Layer:** Fully isolated MongoDB multi-tenant environment run via Docker.
+- **🛡️ Stateful Filter Chain & JWT Engine:** Cryptographically signed tokens using HS256 containing identity context.
+- **🔒 Strict Role Boundary & Isolation:** Securely configured endpoints ensuring only **one system-wide Admin** can exist, forcing all external user sign-ups to standard roles.
+- **👤 Contextual Resource Ownership:** Built-in business checks logic so regular users can only alter documents they created, while Admins retain global administrative override rights.
+- **🎯 Global Fault Management:** Graceful application interceptors preventing raw unhandled 5XX leaks by formatting uniform JSON structures down to clients.
+- **🌐 Cross-Origin Support (CORS):** Fully calibrated multi-client browser resource policy supporting separate frontend frameworks.
 
 ---
 
 ## 🛠️ Technology Stack
 
-* **Backend Engine:** Java 21 / Spring Boot 4.0.6
-* **Security Framework:** Spring Security (Stateless JWT, BCrypt Hashing)
-* **Database Management:** MongoDB (Stateful Multi-Collection Mapping)
-* **Containerization:** Docker Engine / Docker Compose
-* **Client Validation:** Postman API Suite / Terminal Shell (`mongosh`)
+- **Backend Engine:** Java 21 / Spring Boot 4.0.6
+- **Security Framework:** Spring Security (Stateless JWT, BCrypt Hashing)
+- **Database Management:** MongoDB (Stateful Multi-Collection Mapping)
+- **Containerization:** Docker Engine / Docker Compose
+- **Client Validation:** Postman API Suite / Terminal Shell (`mongosh`)
 
 ---
 
@@ -41,8 +41,9 @@ src/main/java/com/lets_play/
 ```
 
 ## Setup & Installation Instructions:
+
 1. Database Container Deployment
-Spin up your fully isolated, credentialed MongoDB instance inside Docker:
+   Spin up your fully isolated, credentialed MongoDB instance inside Docker:
 
 ```bash
 docker run -d \
@@ -54,8 +55,9 @@ docker run -d \
 ```
 
 2. Environment Configuration File
-Verify your active system properties file located at src/main/resources/application.properties:
-```bash 
+   Verify your active system properties file located at src/main/resources/application.properties:
+
+```bash
 spring.application.name=lets-play
 
 # Deployment Server Listening Port
@@ -64,7 +66,8 @@ server.error.include-message=always
 ```
 
 3. Compilation & Runtime Execution
-Wipe old compiled assets, force configuration profile reading, and boot up the server:
+   Wipe old compiled assets, force configuration profile reading, and boot up the server:
+
 ```bash
 docker compose up -d
 docker ps
@@ -73,8 +76,8 @@ docker ps
 ./mvnw clean compile spring-boot:run
 ```
 
-
 ## Terminal Database Debugging Guide
+
 ```bash
 docker exec -it lets-play-db mongosh -u admin -p password123 --authenticationDatabase admin
 ```
@@ -100,6 +103,7 @@ db.users.deleteMany({})
 ```
 
 ## Data Flow Overview
+
     Now that the models and repositories are set, here is how the data will flow through your "Let's Play" application:
 
     * Request: A JSON object comes into the Controller.
@@ -110,7 +114,7 @@ db.users.deleteMany({})
 
     * Database: Stores the document in the products or users collection.
 
-```bash 
+```bash
 * Public Access: GET /api/products works without a token.
 
 * Auth: POST /api/auth/register and /login work.
@@ -119,18 +123,21 @@ db.users.deleteMany({})
 ```
 
 ## Database Seeding & Admin Policy
+
 To protect system integrity, external clients cannot register as admins. Instead, the application seeds exactly one system-wide Administrator into MongoDB automatically upon structural startup via the system context loader:
 
-* Admin Username: admin@gmail.com
-* Admin Password: admin123
-* Role Mapped: ROLE_ADMIN
+- Admin Username: admin@gmail.com
+- Admin Password: admin123
+- Role Mapped: ROLE_ADMIN
 
 ## Postman API Verification Runbook
+
 1. User Registration (POST)
-URL: http://localhost:8080/api/auth/register
+   URL: http://localhost:8080/api/auth/register
 
 Body (JSON):
-```bash 
+
+```bash
 {
     "name": "John Doe",
     "email": "johndoe@gmail.com",
@@ -139,11 +146,11 @@ Body (JSON):
 ```
 
 2. Secure Authentication Login (POST)
-URL: http://localhost:8080/api/auth/login
+   URL: http://localhost:8080/api/auth/login
 
 Body (JSON):
 
-```bash 
+```bash
 {
     "email": "johndoe@gmail.com",
     "password": "securepassword123"

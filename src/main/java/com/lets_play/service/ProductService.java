@@ -5,6 +5,7 @@ import com.lets_play.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import com.lets_play.model.Role;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class ProductService {
 
         // Check if user has the ROLE_ADMIN authority
         boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(Role.ADMIN.name()));
 
         // If they are neither the owner nor an admin, block them!
         if (!currentUsername.equals(productOwnerEmail) && !isAdmin) {
